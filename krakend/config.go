@@ -9,7 +9,7 @@ import (
 )
 
 // Namespace is the key used to store the bot detector config at the ExtraConfig struct
-const Namespace = "github.com/devopsfaith/krakend-botdetector"
+const Namespace = "github_com/devopsfaith/krakend-botdetector"
 
 // ErrNoConfig is returned when there is no config defined for the module
 var ErrNoConfig = errors.New("no config defined for the module")
