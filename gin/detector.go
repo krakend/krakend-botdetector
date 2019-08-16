@@ -49,7 +49,7 @@ func New(hf krakendgin.HandlerFactory, l logging.Logger) krakendgin.HandlerFacto
 
 		d, err := botdetector.New(detectorCfg)
 		if err != nil {
-			l.Warning("botdetector: unable to createt the LRU detector:", err.Error())
+			l.Warning("botdetector: unable to create the LRU detector:", err.Error())
 			return next
 		}
 		return handler(d, next)
