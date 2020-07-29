@@ -23,9 +23,9 @@ func TestRegister(t *testing.T) {
 	cfg := config.ServiceConfig{
 		ExtraConfig: config.ExtraConfig{
 			krakend.Namespace: map[string]interface{}{
-				"blacklist": []string{"a", "b"},
-				"whitelist": []string{"c", "Pingdom.com_bot_version_1.1"},
-				"patterns": []string{
+				"denylist":  []interface{}{"a", "b"},
+				"allowlist": []interface{}{"c", "Pingdom.com_bot_version_1.1"},
+				"patterns": []interface{}{
 					`(Pingdom.com_bot_version_)(\d+)\.(\d+)`,
 					`(facebookexternalhit)/(\d+)\.(\d+)`,
 				},
@@ -52,9 +52,9 @@ func TestNew(t *testing.T) {
 	cfg := &config.EndpointConfig{
 		ExtraConfig: config.ExtraConfig{
 			krakend.Namespace: map[string]interface{}{
-				"blacklist": []string{"a", "b"},
-				"whitelist": []string{"c", "Pingdom.com_bot_version_1.1"},
-				"patterns": []string{
+				"denylist":  []interface{}{"a", "b"},
+				"allowlist": []interface{}{"c", "Pingdom.com_bot_version_1.1"},
+				"patterns": []interface{}{
 					`(Pingdom.com_bot_version_)(\d+)\.(\d+)`,
 					`(facebookexternalhit)/(\d+)\.(\d+)`,
 				},

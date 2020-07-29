@@ -9,8 +9,8 @@ import (
 
 // Config defines the behaviour of the detector
 type Config struct {
-	Blacklist []string
-	Whitelist []string
+	Denylist  []string
+	Allowlist []string
 	Patterns  []string
 	CacheSize int
 }
@@ -31,13 +31,13 @@ func New(cfg Config) (DetectorFunc, error) {
 
 // NewDetector creates a Detector
 func NewDetector(cfg Config) (*Detector, error) {
-	blacklist := make(map[string]struct{}, len(cfg.Blacklist))
-	for _, e := range cfg.Blacklist {
-		blacklist[e] = struct{}{}
+	deny := make(map[string]struct{}, len(cfg.Denylist))
+	for _, e := range cfg.Denylist {
+		deny[e] = struct{}{}
 	}
-	whitelist := make(map[string]struct{}, len(cfg.Whitelist))
-	for _, e := range cfg.Whitelist {
-		whitelist[e] = struct{}{}
+	allow := make(map[string]struct{}, len(cfg.Allowlist))
+	for _, e := range cfg.Allowlist {
+		allow[e] = struct{}{}
 	}
 	patterns := make([]*regexp.Regexp, len(cfg.Patterns))
 	for i, p := range cfg.Patterns {
@@ -48,17 +48,17 @@ func NewDetector(cfg Config) (*Detector, error) {
 		patterns[i] = rp
 	}
 	return &Detector{
-		blacklist: blacklist,
-		whitelist: whitelist,
-		patterns:  patterns,
+		deny:     deny,
+		allow:    allow,
+		patterns: patterns,
 	}, nil
 }
 
 // Detector is a struct able to detect bot-made requests
 type Detector struct {
-	blacklist map[string]struct{}
-	whitelist map[string]struct{}
-	patterns  []*regexp.Regexp
+	deny     map[string]struct{}
+	allow    map[string]struct{}
+	patterns []*regexp.Regexp
 }
 
 // IsBot returns true if the request was made by a bot
@@ -67,10 +67,10 @@ func (d *Detector) IsBot(r *http.Request) bool {
 	if userAgent == "" {
 		return false
 	}
-	if _, ok := d.whitelist[userAgent]; ok {
+	if _, ok := d.allow[userAgent]; ok {
 		return false
 	}
-	if _, ok := d.blacklist[userAgent]; ok {
+	if _, ok := d.deny[userAgent]; ok {
 		return true
 	}
 	for _, p := range d.patterns {
