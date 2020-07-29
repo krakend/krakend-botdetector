@@ -7,8 +7,8 @@ import (
 
 func BenchmarkDetector(b *testing.B) {
 	d, err := New(Config{
-		Blacklist: []string{"a", "b"},
-		Whitelist: []string{"c", "Pingdom.com_bot_version_1.1"},
+		Denylist:  []string{"a", "b"},
+		Allowlist: []string{"c", "Pingdom.com_bot_version_1.1"},
 		Patterns: []string{
 			`(Pingdom.com_bot_version_)(\d+)\.(\d+)`,
 			`(facebookexternalhit)/(\d+)\.(\d+)`,
@@ -24,8 +24,8 @@ func BenchmarkDetector(b *testing.B) {
 
 func BenchmarkLRUDetector(b *testing.B) {
 	d, err := New(Config{
-		Blacklist: []string{"a", "b"},
-		Whitelist: []string{"c", "Pingdom.com_bot_version_1.1"},
+		Denylist:  []string{"a", "b"},
+		Allowlist: []string{"c", "Pingdom.com_bot_version_1.1"},
 		Patterns: []string{
 			`(Pingdom.com_bot_version_)(\d+)\.(\d+)`,
 			`(facebookexternalhit)/(\d+)\.(\d+)`,

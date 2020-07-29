@@ -8,8 +8,8 @@ import (
 
 func TestNew_noLRU(t *testing.T) {
 	d, err := New(Config{
-		Blacklist: []string{"a", "b"},
-		Whitelist: []string{"c", "Pingdom.com_bot_version_1.1"},
+		Denylist:  []string{"a", "b"},
+		Allowlist: []string{"c", "Pingdom.com_bot_version_1.1"},
 		Patterns: []string{
 			`(Pingdom.com_bot_version_)(\d+)\.(\d+)`,
 			`(facebookexternalhit)/(\d+)\.(\d+)`,
@@ -27,8 +27,8 @@ func TestNew_noLRU(t *testing.T) {
 
 func TestNew_LRU(t *testing.T) {
 	d, err := New(Config{
-		Blacklist: []string{"a", "b"},
-		Whitelist: []string{"c", "Pingdom.com_bot_version_1.1"},
+		Denylist:  []string{"a", "b"},
+		Allowlist: []string{"c", "Pingdom.com_bot_version_1.1"},
 		Patterns: []string{
 			`(Pingdom.com_bot_version_)(\d+)\.(\d+)`,
 			`(facebookexternalhit)/(\d+)\.(\d+)`,
