@@ -6,11 +6,11 @@ import (
 
 	botdetector "github.com/devopsfaith/krakend-botdetector"
 	krakend "github.com/devopsfaith/krakend-botdetector/krakend"
-	"github.com/devopsfaith/krakend/config"
-	"github.com/devopsfaith/krakend/logging"
-	"github.com/devopsfaith/krakend/proxy"
-	krakendgin "github.com/devopsfaith/krakend/router/gin"
 	"github.com/gin-gonic/gin"
+	"github.com/luraproject/lura/config"
+	"github.com/luraproject/lura/logging"
+	"github.com/luraproject/lura/proxy"
+	krakendgin "github.com/luraproject/lura/router/gin"
 )
 
 // Register checks the configuration and, if required, registers a bot detector middleware at the gin engine

@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	botdetector "github.com/devopsfaith/krakend-botdetector"
-	"github.com/devopsfaith/krakend/config"
+	"github.com/luraproject/lura/config"
 )
 
 // Namespace is the key used to store the bot detector config at the ExtraConfig struct
