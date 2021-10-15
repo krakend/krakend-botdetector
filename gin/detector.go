@@ -13,20 +13,21 @@ import (
 	krakendgin "github.com/luraproject/lura/router/gin"
 )
 
+const logPrefix = "[SERVICE: Gin][Botdetector]"
+
 // Register checks the configuration and, if required, registers a bot detector middleware at the gin engine
 func Register(cfg config.ServiceConfig, l logging.Logger, engine *gin.Engine) {
 	detectorCfg, err := krakend.ParseConfig(cfg.ExtraConfig)
 	if err == krakend.ErrNoConfig {
-		l.Debug("botdetector middleware: ", err.Error())
 		return
 	}
 	if err != nil {
-		l.Warning("botdetector middleware: ", err.Error())
+		l.Warning(logPrefix, err.Error())
 		return
 	}
 	d, err := botdetector.New(detectorCfg)
 	if err != nil {
-		l.Warning("botdetector middleware: unable to createt the LRU detector:", err.Error())
+		l.Warning(logPrefix, "Unable to create the LRU cache:", err.Error())
 		return
 	}
 	engine.Use(middleware(d))
@@ -36,20 +37,21 @@ func Register(cfg config.ServiceConfig, l logging.Logger, engine *gin.Engine) {
 func New(hf krakendgin.HandlerFactory, l logging.Logger) krakendgin.HandlerFactory {
 	return func(cfg *config.EndpointConfig, p proxy.Proxy) gin.HandlerFunc {
 		next := hf(cfg, p)
+		logPrefix := "[ENDPOINT: " + cfg.Endpoint + "][Botdetector]"
 
 		detectorCfg, err := krakend.ParseConfig(cfg.ExtraConfig)
 		if err == krakend.ErrNoConfig {
-			l.Debug("botdetector: ", err.Error())
+			l.Debug(logPrefix, err.Error())
 			return next
 		}
 		if err != nil {
-			l.Warning("botdetector: ", err.Error())
+			l.Warning(logPrefix, err.Error())
 			return next
 		}
 
 		d, err := botdetector.New(detectorCfg)
 		if err != nil {
-			l.Warning("botdetector: unable to create the LRU detector:", err.Error())
+			l.Warning(logPrefix, "Unable to create the LRU cache:", err.Error())
 			return next
 		}
 		return handler(d, next)
