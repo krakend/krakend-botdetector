@@ -9,10 +9,10 @@ import (
 
 // Config defines the behaviour of the detector
 type Config struct {
-	Denylist  []string
-	Allowlist []string
-	Patterns  []string
-	CacheSize int
+	Denylist  []string `json:"deny"`
+	Allowlist []string `json:"allow"`
+	Patterns  []string `json:"patterns"`
+	CacheSize int      `json:"cache_size"`
 }
 
 // DetectorFunc is a func that chek if a request was made by a bot
