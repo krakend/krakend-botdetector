@@ -80,7 +80,7 @@ func testDetection(engine *gin.Engine) error {
 		"c",
 		"Pingdom.com_bot_version_1.1",
 	} {
-		req, _ := http.NewRequest("GET", "http://example.com", nil)
+		req, _ := http.NewRequest("GET", "http://example.com/", nil)
 		req.Header.Add("User-Agent", ua)
 
 		w := httptest.NewRecorder()
@@ -97,7 +97,7 @@ func testDetection(engine *gin.Engine) error {
 		"facebookexternalhit/1.1",
 		"Pingdom.com_bot_version_1.2",
 	} {
-		req, _ := http.NewRequest("GET", "http://example.com", nil)
+		req, _ := http.NewRequest("GET", "http://example.com/", nil)
 		req.Header.Add("User-Agent", ua)
 
 		w := httptest.NewRecorder()
