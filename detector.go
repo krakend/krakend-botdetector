@@ -64,6 +64,7 @@ type Detector struct {
 // IsBot returns true if the request was made by a bot
 func (d *Detector) IsBot(r *http.Request) bool {
 	userAgent := r.Header.Get("User-Agent")
+
 	if userAgent == "" {
 		return false
 	}

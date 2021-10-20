@@ -30,6 +30,8 @@ func Register(cfg config.ServiceConfig, l logging.Logger, engine *gin.Engine) {
 		l.Warning(logPrefix, "Unable to create the LRU cache:", err.Error())
 		return
 	}
+
+	l.Debug(logPrefix, "The bot detector has been registered successfully")
 	engine.Use(middleware(d))
 }
 
@@ -54,6 +56,8 @@ func New(hf krakendgin.HandlerFactory, l logging.Logger) krakendgin.HandlerFacto
 			l.Warning(logPrefix, "Unable to create the LRU cache:", err.Error())
 			return next
 		}
+
+		l.Debug(logPrefix, "The bot detector has been registered successfully")
 		return handler(d, next)
 	}
 }
