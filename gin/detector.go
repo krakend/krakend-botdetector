@@ -27,7 +27,7 @@ func Register(cfg config.ServiceConfig, l logging.Logger, engine *gin.Engine) {
 	}
 	d, err := botdetector.New(detectorCfg)
 	if err != nil {
-		l.Warning(logPrefix, "Unable to create the LRU cache:", err.Error())
+		l.Warning(logPrefix, "Unable to create the bot detector:", err.Error())
 		return
 	}
 
@@ -43,7 +43,6 @@ func New(hf krakendgin.HandlerFactory, l logging.Logger) krakendgin.HandlerFacto
 
 		detectorCfg, err := krakend.ParseConfig(cfg.ExtraConfig)
 		if err == krakend.ErrNoConfig {
-			l.Debug(logPrefix, err.Error())
 			return next
 		}
 		if err != nil {
@@ -53,7 +52,7 @@ func New(hf krakendgin.HandlerFactory, l logging.Logger) krakendgin.HandlerFacto
 
 		d, err := botdetector.New(detectorCfg)
 		if err != nil {
-			l.Warning(logPrefix, "Unable to create the LRU cache:", err.Error())
+			l.Warning(logPrefix, "Unable to create the bot detector:", err.Error())
 			return next
 		}
 
