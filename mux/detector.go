@@ -8,7 +8,6 @@ import (
 	"github.com/luraproject/lura/config"
 	"github.com/luraproject/lura/logging"
 	"github.com/luraproject/lura/proxy"
-	"github.com/luraproject/lura/router/mux"
 	luramux "github.com/luraproject/lura/router/mux"
 )
 
@@ -54,7 +53,7 @@ type middleware struct {
 }
 
 // Register checks the configuration and, if required, registers a bot detector middleware at the gin engine
-func Register(cfg config.ExtraConfig, l logging.Logger) mux.HandlerMiddleware {
+func Register(cfg config.ExtraConfig, l logging.Logger) luramux.HandlerMiddleware {
 	detectorCfg, err := krakend.ParseConfig(cfg)
 	if err == krakend.ErrNoConfig {
 		l.Debug("botdetector middleware: ", err.Error())
