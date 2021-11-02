@@ -1,6 +1,7 @@
 package mux
 
 import (
+	"errors"
 	"net/http"
 
 	botdetector "github.com/devopsfaith/krakend-botdetector"
@@ -33,15 +34,15 @@ func New(hf luramux.HandlerFactory, l logging.Logger) luramux.HandlerFactory {
 			return next
 		}
 
-		return handler(d, next)
+		return handler(d, next, l)
 	}
 }
 
-func handler(f botdetector.DetectorFunc, next http.HandlerFunc) http.HandlerFunc {
+func handler(f botdetector.DetectorFunc, next http.HandlerFunc, l logging.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if f(r) {
+			l.Error(errBotRejected)
 			w.WriteHeader(http.StatusForbidden)
-			w.Write([]byte("bot rejected"))
 			return
 		}
 		next(w, r)
@@ -71,6 +72,7 @@ func NewMiddleware(cfg config.ExtraConfig, l logging.Logger) luramux.HandlerMidd
 	}
 
 	return middleware{
+		logger:   l,
 		detector: d,
 	}
 }
@@ -78,10 +80,12 @@ func NewMiddleware(cfg config.ExtraConfig, l logging.Logger) luramux.HandlerMidd
 func (m middleware) Handler(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if m.detector(r) {
+			m.logger.Error(errBotRejected)
 			w.WriteHeader(http.StatusForbidden)
-			w.Write([]byte("bot rejected"))
 			return
 		}
 		h.ServeHTTP(w, r)
 	})
 }
+
+var errBotRejected = errors.New("bot rejected")
