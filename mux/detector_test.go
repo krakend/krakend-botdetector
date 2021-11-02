@@ -28,7 +28,7 @@ func TestRegister(t *testing.T) {
 		},
 	}
 
-	middleware := Register(cfg.ExtraConfig, logging.NoOp)
+	middleware := NewMiddleware(cfg.ExtraConfig, logging.NoOp)
 
 	mux := http.NewServeMux()
 	mux.Handle("/", middleware.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

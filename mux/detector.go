@@ -50,10 +50,11 @@ func handler(f botdetector.DetectorFunc, next http.HandlerFunc) http.HandlerFunc
 
 type middleware struct {
 	detector botdetector.DetectorFunc
+	logger   logging.Logger
 }
 
-// Register checks the configuration and, if required, registers a bot detector middleware at the gin engine
-func Register(cfg config.ExtraConfig, l logging.Logger) luramux.HandlerMiddleware {
+// NewMiddleware checks the configuration and, if required, registers a bot detector middleware at the mux engine
+func NewMiddleware(cfg config.ExtraConfig, l logging.Logger) luramux.HandlerMiddleware {
 	detectorCfg, err := krakend.ParseConfig(cfg)
 	if err == krakend.ErrNoConfig {
 		l.Debug("botdetector middleware: ", err.Error())
