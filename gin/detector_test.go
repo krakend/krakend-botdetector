@@ -7,12 +7,12 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	krakend "github.com/devopsfaith/krakend-botdetector/krakend"
+	krakend "github.com/devopsfaith/krakend-botdetector/v2/krakend"
 	"github.com/gin-gonic/gin"
-	"github.com/luraproject/lura/config"
-	"github.com/luraproject/lura/logging"
-	"github.com/luraproject/lura/proxy"
-	krakendgin "github.com/luraproject/lura/router/gin"
+	"github.com/luraproject/lura/v2/config"
+	"github.com/luraproject/lura/v2/logging"
+	"github.com/luraproject/lura/v2/proxy"
+	krakendgin "github.com/luraproject/lura/v2/router/gin"
 )
 
 func TestRegister(t *testing.T) {
@@ -23,8 +23,8 @@ func TestRegister(t *testing.T) {
 	cfg := config.ServiceConfig{
 		ExtraConfig: config.ExtraConfig{
 			krakend.Namespace: map[string]interface{}{
-				"denylist":  []interface{}{"a", "b"},
-				"allowlist": []interface{}{"c", "Pingdom.com_bot_version_1.1"},
+				"deny":  []interface{}{"a", "b"},
+				"allow": []interface{}{"c", "Pingdom.com_bot_version_1.1"},
 				"patterns": []interface{}{
 					`(Pingdom.com_bot_version_)(\d+)\.(\d+)`,
 					`(facebookexternalhit)/(\d+)\.(\d+)`,
@@ -52,8 +52,8 @@ func TestNew(t *testing.T) {
 	cfg := &config.EndpointConfig{
 		ExtraConfig: config.ExtraConfig{
 			krakend.Namespace: map[string]interface{}{
-				"denylist":  []interface{}{"a", "b"},
-				"allowlist": []interface{}{"c", "Pingdom.com_bot_version_1.1"},
+				"deny":  []interface{}{"a", "b"},
+				"allow": []interface{}{"c", "Pingdom.com_bot_version_1.1"},
 				"patterns": []interface{}{
 					`(Pingdom.com_bot_version_)(\d+)\.(\d+)`,
 					`(facebookexternalhit)/(\d+)\.(\d+)`,
@@ -80,7 +80,7 @@ func testDetection(engine *gin.Engine) error {
 		"c",
 		"Pingdom.com_bot_version_1.1",
 	} {
-		req, _ := http.NewRequest("GET", "http://example.com", nil)
+		req, _ := http.NewRequest("GET", "http://example.com/", nil)
 		req.Header.Add("User-Agent", ua)
 
 		w := httptest.NewRecorder()
@@ -97,7 +97,7 @@ func testDetection(engine *gin.Engine) error {
 		"facebookexternalhit/1.1",
 		"Pingdom.com_bot_version_1.2",
 	} {
-		req, _ := http.NewRequest("GET", "http://example.com", nil)
+		req, _ := http.NewRequest("GET", "http://example.com/", nil)
 		req.Header.Add("User-Agent", ua)
 
 		w := httptest.NewRecorder()
