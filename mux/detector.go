@@ -4,12 +4,12 @@ import (
 	"errors"
 	"net/http"
 
-	botdetector "github.com/devopsfaith/krakend-botdetector"
-	krakend "github.com/devopsfaith/krakend-botdetector/krakend"
-	"github.com/luraproject/lura/config"
-	"github.com/luraproject/lura/logging"
-	"github.com/luraproject/lura/proxy"
-	luramux "github.com/luraproject/lura/router/mux"
+	botdetector "github.com/devopsfaith/krakend-botdetector/v2"
+	krakend "github.com/devopsfaith/krakend-botdetector/v2/krakend"
+	"github.com/luraproject/lura/v2/config"
+	"github.com/luraproject/lura/v2/logging"
+	"github.com/luraproject/lura/v2/proxy"
+	luramux "github.com/luraproject/lura/v2/router/mux"
 )
 
 // New checks the configuration and, if required, wraps the handler factory with a bot detector middleware

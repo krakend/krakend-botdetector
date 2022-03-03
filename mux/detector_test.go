@@ -7,19 +7,19 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	krakend "github.com/devopsfaith/krakend-botdetector/krakend"
-	"github.com/luraproject/lura/config"
-	"github.com/luraproject/lura/logging"
-	"github.com/luraproject/lura/proxy"
-	luramux "github.com/luraproject/lura/router/mux"
+	krakend "github.com/devopsfaith/krakend-botdetector/v2/krakend"
+	"github.com/luraproject/lura/v2/config"
+	"github.com/luraproject/lura/v2/logging"
+	"github.com/luraproject/lura/v2/proxy"
+	luramux "github.com/luraproject/lura/v2/router/mux"
 )
 
 func TestRegister(t *testing.T) {
 	cfg := config.ServiceConfig{
 		ExtraConfig: config.ExtraConfig{
 			krakend.Namespace: map[string]interface{}{
-				"denylist":  []interface{}{"a", "b"},
-				"allowlist": []interface{}{"c", "Pingdom.com_bot_version_1.1"},
+				"deny":  []interface{}{"a", "b"},
+				"allow": []interface{}{"c", "Pingdom.com_bot_version_1.1"},
 				"patterns": []interface{}{
 					`(Pingdom.com_bot_version_)(\d+)\.(\d+)`,
 					`(facebookexternalhit)/(\d+)\.(\d+)`,
@@ -46,8 +46,8 @@ func TestNew(t *testing.T) {
 		Method: "GET",
 		ExtraConfig: config.ExtraConfig{
 			krakend.Namespace: map[string]interface{}{
-				"denylist":  []interface{}{"a", "b"},
-				"allowlist": []interface{}{"c", "Pingdom.com_bot_version_1.1"},
+				"deny":  []interface{}{"a", "b"},
+				"allow": []interface{}{"c", "Pingdom.com_bot_version_1.1"},
 				"patterns": []interface{}{
 					`(Pingdom.com_bot_version_)(\d+)\.(\d+)`,
 					`(facebookexternalhit)/(\d+)\.(\d+)`,
