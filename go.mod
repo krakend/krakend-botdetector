@@ -1,4 +1,4 @@
-module github.com/devopsfaith/krakend-botdetector/v2
+module github.com/krakendio/krakend-botdetector/v2
 
 go 1.17
 
