@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	krakend "github.com/devopsfaith/krakend-botdetector/v2/krakend"
+	krakend "github.com/krakendio/krakend-botdetector/v2/krakend"
 	"github.com/luraproject/lura/v2/config"
 	"github.com/luraproject/lura/v2/logging"
 	"github.com/luraproject/lura/v2/proxy"

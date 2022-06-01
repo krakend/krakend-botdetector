@@ -4,9 +4,9 @@ import (
 	"errors"
 	"net/http"
 
-	botdetector "github.com/devopsfaith/krakend-botdetector/v2"
-	krakend "github.com/devopsfaith/krakend-botdetector/v2/krakend"
 	"github.com/gin-gonic/gin"
+	botdetector "github.com/krakendio/krakend-botdetector/v2"
+	krakend "github.com/krakendio/krakend-botdetector/v2/krakend"
 	"github.com/luraproject/lura/v2/config"
 	"github.com/luraproject/lura/v2/logging"
 	"github.com/luraproject/lura/v2/proxy"
