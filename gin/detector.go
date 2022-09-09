@@ -32,7 +32,7 @@ func Register(cfg config.ServiceConfig, l logging.Logger, engine *gin.Engine) {
 	}
 
 	l.Debug(logPrefix, "The bot detector has been registered successfully")
-	engine.Use(middleware(d))
+	engine.Use(middleware(d, l))
 }
 
 // New checks the configuration and, if required, wraps the handler factory with a bot detector middleware
@@ -57,14 +57,15 @@ func New(hf krakendgin.HandlerFactory, l logging.Logger) krakendgin.HandlerFacto
 		}
 
 		l.Debug(logPrefix, "The bot detector has been registered successfully")
-		return handler(d, next)
+		return handler(d, next, l)
 	}
 }
 
-func middleware(f botdetector.DetectorFunc) gin.HandlerFunc {
+func middleware(f botdetector.DetectorFunc, l logging.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if f(c.Request) {
-			c.AbortWithError(http.StatusForbidden, errBotRejected)
+			l.Error(logPrefix, errBotRejected)
+			c.AbortWithStatus(http.StatusForbidden)
 			return
 		}
 
@@ -72,10 +73,11 @@ func middleware(f botdetector.DetectorFunc) gin.HandlerFunc {
 	}
 }
 
-func handler(f botdetector.DetectorFunc, next gin.HandlerFunc) gin.HandlerFunc {
+func handler(f botdetector.DetectorFunc, next gin.HandlerFunc, l logging.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if f(c.Request) {
-			c.AbortWithError(http.StatusForbidden, errBotRejected)
+			l.Error(logPrefix, errBotRejected)
+			c.AbortWithStatus(http.StatusForbidden)
 			return
 		}
 
