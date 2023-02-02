@@ -9,10 +9,11 @@ import (
 
 // Config defines the behaviour of the detector
 type Config struct {
-	Denylist  []string `json:"deny"`
-	Allowlist []string `json:"allow"`
-	Patterns  []string `json:"patterns"`
-	CacheSize int      `json:"cache_size"`
+	Denylist      []string `json:"deny"`
+	Allowlist     []string `json:"allow"`
+	Patterns      []string `json:"patterns"`
+	CacheSize     int      `json:"cache_size"`
+	RejectIfEmpty bool     `json:"empty_user_agent_is_bot"`
 }
 
 // DetectorFunc is a func that chek if a request was made by a bot
@@ -48,17 +49,19 @@ func NewDetector(cfg Config) (*Detector, error) {
 		patterns[i] = rp
 	}
 	return &Detector{
-		deny:     deny,
-		allow:    allow,
-		patterns: patterns,
+		deny:          deny,
+		allow:         allow,
+		patterns:      patterns,
+		rejectIfEmpty: cfg.RejectIfEmpty,
 	}, nil
 }
 
 // Detector is a struct able to detect bot-made requests
 type Detector struct {
-	deny     map[string]struct{}
-	allow    map[string]struct{}
-	patterns []*regexp.Regexp
+	deny          map[string]struct{}
+	allow         map[string]struct{}
+	patterns      []*regexp.Regexp
+	rejectIfEmpty bool
 }
 
 // IsBot returns true if the request was made by a bot
@@ -66,7 +69,7 @@ func (d *Detector) IsBot(r *http.Request) bool {
 	userAgent := r.Header.Get("User-Agent")
 
 	if userAgent == "" {
-		return false
+		return d.rejectIfEmpty
 	}
 	if _, ok := d.allow[userAgent]; ok {
 		return false
