@@ -3,9 +3,9 @@ module github.com/krakendio/krakend-botdetector/v2
 go 1.19
 
 require (
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.9.1
 	github.com/hashicorp/golang-lru v0.5.1
-	github.com/luraproject/lura/v2 v2.0.5
+	github.com/luraproject/lura/v2 v2.7.0
 )
 
 require (
