@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	krakend "github.com/krakendio/krakend-botdetector/v2/krakend"
+	krakend "github.com/krakend/krakend-botdetector/v2/krakend"
 	"github.com/luraproject/lura/v2/config"
 	"github.com/luraproject/lura/v2/logging"
 	"github.com/luraproject/lura/v2/proxy"
@@ -83,7 +83,7 @@ func testDetection(muxServer http.Handler) error {
 	} {
 
 		url := ts.URL + "/"
-		req, _ := http.NewRequest("GET", url, nil)
+		req, _ := http.NewRequest("GET", url, http.NoBody)
 		req.Header.Add("User-Agent", ua)
 
 		w := httptest.NewRecorder()
@@ -100,7 +100,7 @@ func testDetection(muxServer http.Handler) error {
 		"facebookexternalhit/1.1",
 		"Pingdom.com_bot_version_1.2",
 	} {
-		req, _ := http.NewRequest("GET", ts.URL+"/", nil)
+		req, _ := http.NewRequest("GET", ts.URL+"/", http.NoBody)
 		req.Header.Add("User-Agent", ua)
 
 		w := httptest.NewRecorder()

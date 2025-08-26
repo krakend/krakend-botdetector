@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	krakend "github.com/krakendio/krakend-botdetector/v2/krakend"
+	krakend "github.com/krakend/krakend-botdetector/v2/krakend"
 	"github.com/luraproject/lura/v2/config"
 	"github.com/luraproject/lura/v2/logging"
 	"github.com/luraproject/lura/v2/proxy"
@@ -80,7 +80,7 @@ func testDetection(engine *gin.Engine) error {
 		"c",
 		"Pingdom.com_bot_version_1.1",
 	} {
-		req, _ := http.NewRequest("GET", "https://example.com/", nil)
+		req, _ := http.NewRequest("GET", "https://example.com/", http.NoBody)
 		req.Header.Add("User-Agent", ua)
 
 		w := httptest.NewRecorder()
@@ -97,7 +97,7 @@ func testDetection(engine *gin.Engine) error {
 		"facebookexternalhit/1.1",
 		"Pingdom.com_bot_version_1.2",
 	} {
-		req, _ := http.NewRequest("GET", "https://example.com/", nil)
+		req, _ := http.NewRequest("GET", "https://example.com/", http.NoBody)
 		req.Header.Add("User-Agent", ua)
 
 		w := httptest.NewRecorder()

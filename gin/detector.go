@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	botdetector "github.com/krakendio/krakend-botdetector/v2"
-	krakend "github.com/krakendio/krakend-botdetector/v2/krakend"
+	botdetector "github.com/krakend/krakend-botdetector/v2"
+	krakend "github.com/krakend/krakend-botdetector/v2/krakend"
 	"github.com/luraproject/lura/v2/config"
 	"github.com/luraproject/lura/v2/logging"
 	"github.com/luraproject/lura/v2/proxy"
