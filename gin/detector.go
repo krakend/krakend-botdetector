@@ -2,6 +2,7 @@ package gin
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -39,7 +40,7 @@ func Register(cfg config.ServiceConfig, l logging.Logger, engine *gin.Engine) {
 func New(hf krakendgin.HandlerFactory, l logging.Logger) krakendgin.HandlerFactory {
 	return func(cfg *config.EndpointConfig, p proxy.Proxy) gin.HandlerFunc {
 		next := hf(cfg, p)
-		logPrefix := "[ENDPOINT: " + cfg.Endpoint + "][Botdetector]"
+		logPrefix := fmt.Sprintf("[ENDPOINT: %s %s][Botdetector]", cfg.Method, cfg.Endpoint)
 
 		detectorCfg, err := krakend.ParseConfig(cfg.ExtraConfig)
 		if err == krakend.ErrNoConfig {
