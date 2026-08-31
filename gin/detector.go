@@ -6,12 +6,12 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	botdetector "github.com/krakend/krakend-botdetector/v2"
-	krakend "github.com/krakend/krakend-botdetector/v2/krakend"
-	"github.com/luraproject/lura/v2/config"
-	"github.com/luraproject/lura/v2/logging"
-	"github.com/luraproject/lura/v2/proxy"
-	krakendgin "github.com/luraproject/lura/v2/router/gin"
+	botdetector "github.com/krakend/krakend-botdetector/v3"
+	krakend "github.com/krakend/krakend-botdetector/v3/krakend"
+	"github.com/luraproject/lura/v3/config"
+	"github.com/luraproject/lura/v3/logging"
+	"github.com/luraproject/lura/v3/proxy"
+	krakendgin "github.com/luraproject/lura/v3/router/gin"
 )
 
 const logPrefix = "[SERVICE: Gin][Botdetector]"
