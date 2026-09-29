@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 
-	botdetector "github.com/krakend/krakend-botdetector/v2"
-	"github.com/luraproject/lura/v2/config"
+	botdetector "github.com/krakend/krakend-botdetector/v3"
+	"github.com/luraproject/lura/v3/config"
 )
 
 // Namespace is the key used to store the bot detector config at the ExtraConfig struct
-const Namespace = "github_com/devopsfaith/krakend-botdetector"
+const Namespace = "security/bot-detector"
 
 // ErrNoConfig is returned when there is no config defined for the module
 var ErrNoConfig = errors.New("no config defined for the module")
